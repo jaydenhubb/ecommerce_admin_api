@@ -58,3 +58,15 @@ export const updateProducts = async (req, res, next) => {
     next(err);
   }
 };
+export const deleteProducts = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const product = await Product.findByIdAndDelete(id);
+    if(!product){
+        throw  createHttpError(404, 'No such product')
+    }
+    res.status(204).json("deleted");
+  } catch (err) {
+    next(err);
+  }
+};
